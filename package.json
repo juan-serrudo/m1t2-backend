@@ -1,10 +1,15 @@
 {
   "name": "m1t2-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Bienvenido a Elegance Backend, basado ​​en principios REST, devuelve metadatos JSON",
+  "author": "Juan Victor Serrudo Chavez",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "contact": {
+    "name": "Juan Victor",
+    "url": "",
+    "email": "juan.serrudo@ucb.edu.bo"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -21,8 +26,12 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.0.7",
+    "compression": "^1.8.0",
+    "luxon": "^3.5.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -34,6 +43,7 @@
     "@nestjs/testing": "^11.0.1",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.7",
+    "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
