@@ -22,6 +22,6 @@ export class TypesArticles {
   @Column({ type: 'varchar', length: 200 })
   name: string;
 
-  @OneToMany(() => Articles, (article) => article.typeArticleId)
+  @OneToMany(() => Articles, article => article.typeArticleId)
   articles: Articles[];
 }

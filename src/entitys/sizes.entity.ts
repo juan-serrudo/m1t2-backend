@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, Unique } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, Unique, OneToMany } from 'typeorm';
+import { ArticlesSizes } from './articles-sizes.entity';
 
 @Entity()
 @Unique(['name'])
@@ -20,4 +21,7 @@ export class Sizes {
 
   @Column({ type: 'varchar', length: 100 })
   name: string;
+
+  @OneToMany(() => ArticlesSizes, articleSize => articleSize.sizeId)
+  articleSize: ArticlesSizes[];
 }

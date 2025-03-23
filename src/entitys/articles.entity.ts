@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, Unique, OneToMany, ManyToOne } from 'typeorm';
 import { TypesArticles } from './types-articles.entity';
+import { ArticlesSizes } from './articles-sizes.entity';
 
 @Entity()
 export class Articles {
@@ -38,4 +39,7 @@ export class Articles {
 
   @ManyToOne(() => TypesArticles, typeArticle => typeArticle.id)
   typeArticle: TypesArticles[];
+
+  @OneToMany(() => ArticlesSizes, articleSize => articleSize.articleId)
+  articleSize: ArticlesSizes[];
 }
