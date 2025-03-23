@@ -37,7 +37,7 @@ async function bootstrap() {
   // Interceptors globales
   app.useGlobalInterceptors(new ResponseFormatInterceptor());
 
-  if (envService.get('ENV_ENTORNO') !== 'production') configSwagger(app, packageJson);
+  if (envService.get('ENV_SWAGGER_SHOW')) configSwagger(app, packageJson);
 
   const port = envService.get<number>('port') || 3000;
   await app.listen(port, '0.0.0.0').then(async () => {
