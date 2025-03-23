@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import configuration from './configurations/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import configuration from './configurations/configuration';
+import { SizesController } from './modules/sizes/sizes.controller';
+import { SizesService } from './modules/sizes/sizes.service';
+import { sizesProviders } from './providers/sizes.providers';
 
 @Module({
   imports: [
@@ -19,8 +22,15 @@ import configuration from './configurations/configuration';
       synchronize: Boolean(process.env.ENV_SYNCHRONIZE) || true
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    AppController,
+    SizesController,
+  ],
+  providers: [
+    AppService,
+    SizesService,
+    ...sizesProviders,
+  ],
 })
 
 export class AppModule {}
