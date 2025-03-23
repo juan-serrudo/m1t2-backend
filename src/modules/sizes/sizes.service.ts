@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { Sizes } from 'src/entitys/sizes.entity';
 import { Repository } from 'typeorm';
@@ -8,12 +7,8 @@ import { Repository } from 'typeorm';
 export class SizesService {
 
   constructor(
-    @InjectRepository(Sizes)
+    @Inject('SIZES_REPOSITORY')
     private sizesRepository: Repository<Sizes>,
-
-    // @Inject('SIZES_REPOSITORY')
-    // private sizesRepository: Repository<Sizes>,
-
   ) {}
 
   getSizes(): ResponseDTO {
@@ -28,8 +23,8 @@ export class SizesService {
     // Proceso
     try {
       response.error = false;
-      response.message = 'Tamaños';
-      response.response = this.sizesRepository.find();
+      response.message = 'Se logro consultar a la base de datos.';
+      response.response = this.sizesRepository.find().then(() => {});
       response.status = 200;
 
     } catch (error) {
