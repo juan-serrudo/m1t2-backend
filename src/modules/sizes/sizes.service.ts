@@ -11,7 +11,7 @@ export class SizesService {
     private sizesRepository: Repository<Sizes>,
   ) {}
 
-  getSizes(): ResponseDTO {
+  async findAll(): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -24,8 +24,9 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se logro consultar a la base de datos.';
-      response.response = this.sizesRepository.find().then(() => {});
+      response.response = await this.sizesRepository.find();
       response.status = 200;
+      console.log(response.response)
 
     } catch (error) {
       response.error = true;

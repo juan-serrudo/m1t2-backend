@@ -12,7 +12,7 @@ export class SizesController {
   @ApiOperation({
     summary: 'Obtiene todos los valores de la tabla.',
   })
-  getSizes(): ResponseDTO {
-    return this.sizesService.getSizes();
+  async findAll(): Promise<ResponseDTO> {
+    return this.sizesService.findAll();
   }
 }
