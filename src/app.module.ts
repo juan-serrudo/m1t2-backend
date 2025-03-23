@@ -7,6 +7,9 @@ import { SizesController } from './modules/sizes/sizes.controller';
 import { SizesService } from './modules/sizes/sizes.service';
 import { databaseProviders } from './providers/database.providers';
 import { sizesProviders } from './providers/sizes.providers';
+import { typesArticlesProviders } from './providers/types-articles.providers';
+import { TypesArticlesService } from './modules/types-articles/types-articles.service';
+import { TypesArticlesSController } from './modules/types-articles/types-articles.controller';
 
 @Module({
   imports: [
@@ -19,15 +22,19 @@ import { sizesProviders } from './providers/sizes.providers';
   controllers: [
     AppController,
     SizesController,
+    TypesArticlesSController,
   ],
   providers: [
     AppService,
     SizesService,
+    TypesArticlesService,
     ...databaseProviders,
     ...sizesProviders,
+    ...typesArticlesProviders,
   ],
   exports: [
-    ...databaseProviders
+    ...databaseProviders,
+    ...typesArticlesProviders,
   ],
 })
 
