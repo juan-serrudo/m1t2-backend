@@ -16,7 +16,7 @@ export class TypesArticles {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @Column({ type: 'int2' })
+  @Column({ type: 'int2', default: 1 })
   state: number;
 
   @Column({ type: 'varchar', length: 200 })
