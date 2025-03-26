@@ -17,7 +17,7 @@ export class UsersController {
   })
   @ApiBearerAuth()
   async findAll(
-    @TokenDecorator() tokenValid: ResponseDTO,
+    @TokenDecorator() tokenValid: ResponseDTO
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 

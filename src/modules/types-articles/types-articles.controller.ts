@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { TypesArticlesService } from './types-articles.service';
 import { CreateTypeArticleDto, UpdateTypeArticleDto } from 'src/dto/type-article.dto';
+import { TokenDecorator } from 'src/decorators/jwt.decorator';
 
 @ApiTags('TIPOS DE ARTICULO')
 @Controller('typearticle')
@@ -14,8 +15,17 @@ export class TypesArticlesController {
   @ApiOperation({
     summary: 'Obtiene todos los valores de la tabla.',
   })
-  async findAll(): Promise<ResponseDTO> {
-    return this.typesArticlesService.findAll();
+  @ApiBearerAuth()
+  async findAll(
+      @TokenDecorator() tokenValid: ResponseDTO
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.typesArticlesService.findAll();
+    }
+
+    return response;
   }
 
   @Version('1')
@@ -23,8 +33,18 @@ export class TypesArticlesController {
   @ApiOperation({
     summary: 'Registrar en la base de datos.',
   })
-  async save(@Body() value: CreateTypeArticleDto): Promise<ResponseDTO> {
-    return this.typesArticlesService.save(value);
+  @ApiBearerAuth()
+  async save(
+      @TokenDecorator() tokenValid: ResponseDTO,
+      @Body() value: CreateTypeArticleDto
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.typesArticlesService.save(value);
+    }
+
+    return response;
   }
 
   @Version('1')
@@ -32,8 +52,19 @@ export class TypesArticlesController {
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
   })
-  async update(@Param('id') id: number, @Body() value: UpdateTypeArticleDto): Promise<ResponseDTO> {
-    return this.typesArticlesService.update(id, value);
+  @ApiBearerAuth()
+  async update(
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Param('id') id: number,
+    @Body() value: UpdateTypeArticleDto
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.typesArticlesService.update(id, value);
+    }
+
+    return response;
   }
 
   @Version('1')
@@ -41,7 +72,17 @@ export class TypesArticlesController {
   @ApiOperation({
     summary: 'Eliminar de la base de datos.',
   })
-  async delete(@Param('id') id: number): Promise<ResponseDTO> {
-    return this.typesArticlesService.delete(id);
+  @ApiBearerAuth()
+  async delete(
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Param('id') id: number
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.typesArticlesService.delete(id);
+    }
+
+    return response;
   }
 }
