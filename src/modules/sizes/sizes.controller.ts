@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { SizesService } from './sizes.service';
@@ -9,6 +9,7 @@ import { CreateSizeDto } from 'src/dto/size.dto';
 export class SizesController {
   constructor(private readonly sizesService: SizesService) {}
 
+  @Version('1')
   @Get('/')
   @ApiOperation({
     summary: 'Obtiene todos los valores de la tabla.',
@@ -17,6 +18,7 @@ export class SizesController {
     return this.sizesService.findAll();
   }
 
+  @Version('1')
   @Post('/')
   @ApiOperation({
     summary: 'Registrar en la base de datos.',
@@ -25,6 +27,7 @@ export class SizesController {
     return this.sizesService.save(size);
   }
 
+  @Version('1')
   @Put('/:id')
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
@@ -33,6 +36,7 @@ export class SizesController {
     return this.sizesService.update(id, size);
   }
 
+  @Version('1')
   @Delete('/:id')
   @ApiOperation({
     summary: 'Eliminar de la base de datos.',
