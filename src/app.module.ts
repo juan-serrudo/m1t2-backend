@@ -15,6 +15,9 @@ import { UsersService } from './modules/users/users.service';
 import { usersProviders } from './providers/users.providers';
 import { SecurityController } from './modules/security/security.controller';
 import { SecurityService } from './modules/security/security.service';
+import { ArticlesController } from './modules/articles/articles.controller';
+import { ArticlesService } from './modules/articles/articles.service';
+import { articlesProviders } from './providers/articles.providers';
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { SecurityService } from './modules/security/security.service';
     AppController,
     SecurityController,
     UsersController,
+    ArticlesController,
     SizesController,
     TypesArticlesController,
   ],
@@ -35,16 +39,19 @@ import { SecurityService } from './modules/security/security.service';
     AppService,
     SecurityService,
     UsersService,
+    ArticlesService,
     SizesService,
     TypesArticlesService,
     ...databaseProviders,
     ...usersProviders,
+    ...articlesProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
   exports: [
     ...databaseProviders,
     ...usersProviders,
+    ...articlesProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
