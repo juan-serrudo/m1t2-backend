@@ -40,11 +40,11 @@ export class SecurityService {
 
           response = await signJWTHelperV1(data);
         } else {
-          response.message = 'El usuario o contraseña incorrecta.';
+          response.message = 'Usuario o contraseña incorrecta.';
           response.status = 401;
         }
       } else {
-        response.message = 'El usuario o contraseña incorrecta.';
+        response.message = 'Usuario o contraseña incorrecta.';
         response.status = 401;
       }
     } catch (error) {
