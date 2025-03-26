@@ -2,11 +2,11 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestj
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { TypesArticlesService } from './types-articles.service';
-import { TypeArticleSizeDto } from 'src/dto/type-article.dto';
+import { CreateTypeArticleDto, UpdateTypeArticleDto } from 'src/dto/type-article.dto';
 
 @ApiTags('TIPOS DE ARTICULO')
 @Controller('typearticle')
-export class TypesArticlesSController {
+export class TypesArticlesController {
   constructor(private readonly typesArticlesService: TypesArticlesService) {}
 
   @Version('1')
@@ -23,8 +23,8 @@ export class TypesArticlesSController {
   @ApiOperation({
     summary: 'Registrar en la base de datos.',
   })
-  async save(@Body() size: TypeArticleSizeDto): Promise<ResponseDTO> {
-    return this.typesArticlesService.save(size);
+  async save(@Body() value: CreateTypeArticleDto): Promise<ResponseDTO> {
+    return this.typesArticlesService.save(value);
   }
 
   @Version('1')
@@ -32,8 +32,8 @@ export class TypesArticlesSController {
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
   })
-  async update(@Param('id') id: number, @Body() size: TypeArticleSizeDto): Promise<ResponseDTO> {
-    return this.typesArticlesService.update(id, size);
+  async update(@Param('id') id: number, @Body() value: UpdateTypeArticleDto): Promise<ResponseDTO> {
+    return this.typesArticlesService.update(id, value);
   }
 
   @Version('1')

@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { ResponseDTO } from 'src/dto/response.dto';
 
-export const signJWTHelperV1 = (data: any, expiresIn: string): Promise<ResponseDTO> => {
+export const signJWTHelperV1 = (data: any): Promise<ResponseDTO> => {
   // === INICIALIZACION DE VARIABLES ===
   const response: ResponseDTO = {
     error: true,
@@ -12,7 +12,11 @@ export const signJWTHelperV1 = (data: any, expiresIn: string): Promise<ResponseD
 
   // === OPERACION ===
   try {
-    const token = jwt.sign(data, `${process.env.APP_JWT_SECRET}`, {
+
+    const jwtSecret = process.env.APP_JWT_SECRET || 'CHANGE_JWT_SECRET';
+    const expiresIn = process.env.APP_JWT_EXPIRESIN || '4h';
+
+    const token = jwt.sign(data, jwtSecret, {
       expiresIn,
     });
 

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestj
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { SizesService } from './sizes.service';
-import { CreateSizeDto } from 'src/dto/size.dto';
+import { CreateSizeDto, UpdateSizeDto } from 'src/dto/size.dto';
 
 @ApiTags('TAMAÑOS')
 @Controller('size')
@@ -32,7 +32,7 @@ export class SizesController {
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
   })
-  async update(@Param('id') id: number, @Body() size: CreateSizeDto): Promise<ResponseDTO> {
+  async update(@Param('id') id: number, @Body() size: UpdateSizeDto): Promise<ResponseDTO> {
     return this.sizesService.update(id, size);
   }
 

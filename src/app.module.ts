@@ -9,7 +9,12 @@ import { databaseProviders } from './providers/database.providers';
 import { sizesProviders } from './providers/sizes.providers';
 import { typesArticlesProviders } from './providers/types-articles.providers';
 import { TypesArticlesService } from './modules/types-articles/types-articles.service';
-import { TypesArticlesSController } from './modules/types-articles/types-articles.controller';
+import { TypesArticlesController } from './modules/types-articles/types-articles.controller';
+import { UsersController } from './modules/users/users.controller';
+import { UsersService } from './modules/users/users.service';
+import { usersProviders } from './providers/users.providers';
+import { SecurityController } from './modules/security/security.controller';
+import { SecurityService } from './modules/security/security.service';
 
 @Module({
   imports: [
@@ -21,19 +26,26 @@ import { TypesArticlesSController } from './modules/types-articles/types-article
   ],
   controllers: [
     AppController,
+    SecurityController,
+    UsersController,
     SizesController,
-    TypesArticlesSController,
+    TypesArticlesController,
   ],
   providers: [
     AppService,
+    SecurityService,
+    UsersService,
     SizesService,
     TypesArticlesService,
     ...databaseProviders,
+    ...usersProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
   exports: [
     ...databaseProviders,
+    ...usersProviders,
+    ...sizesProviders,
     ...typesArticlesProviders,
   ],
 })

@@ -20,3 +20,5 @@ export class CreateSizeDto {
   })
   name: string;
 }
+
+export class UpdateSizeDto extends CreateSizeDto {}
