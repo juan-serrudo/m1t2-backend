@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { CreateSizeDto, UpdateSizeDto } from 'src/dto/size.dto';
-import { Sizes } from 'src/entitys/sizes.entity';
+import { Articles } from 'src/entitys/articles.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class SizesService {
+export class ArticlesService {
 
   constructor(
-    @Inject('SIZES_REPOSITORY')
-    private sizesRepository: Repository<Sizes>,
+    @Inject('ARTICLES_REPOSITORY')
+    private articlesRepository: Repository<Articles>,
   ) {}
 
   async findAll(): Promise<ResponseDTO> {
@@ -25,7 +25,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'La consulta a la base de datos se realizó correctamente.';
-      response.response = await this.sizesRepository.find();
+      response.response = await this.articlesRepository.find();
       response.status = 200;
 
     } catch (error) {
@@ -39,7 +39,7 @@ export class SizesService {
     return response;
   }
 
-  async save( size: CreateSizeDto ): Promise<ResponseDTO> {
+  async save( value: CreateArticleDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -52,7 +52,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se registro en la base de datos.';
-      response.response = await this.sizesRepository.save(size);
+      response.response = await this.articlesRepository.save(value);
       response.status = 200;
 
     } catch (error) {
@@ -66,7 +66,7 @@ export class SizesService {
     return response;
   }
 
-  async update( id: number, size: UpdateSizeDto ): Promise<ResponseDTO> {
+  async update( id: number, value: UpdateArticleDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -79,7 +79,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se actualizo la base de datos.';
-      response.response = await this.sizesRepository.update(id, size);
+      response.response = await this.articlesRepository.update(id, value);
       response.status = 200;
 
     } catch (error) {
@@ -106,7 +106,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se elimino de la base de datos.';
-      response.response = await this.sizesRepository.delete(id);
+      response.response = await this.articlesRepository.delete(id);
       response.status = 200;
 
     } catch (error) {

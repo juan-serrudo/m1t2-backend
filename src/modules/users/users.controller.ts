@@ -1,14 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Version } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { TypesArticlesService } from './types-articles.service';
-import { CreateTypeArticleDto, UpdateTypeArticleDto } from 'src/dto/type-article.dto';
+import { UsersService } from './users.service';
+import { CreateUserDto, UpdateUserDto } from 'src/dto/user.dto';
 import { TokenDecorator } from 'src/decorators/jwt.decorator';
 
-@ApiTags('TIPOS DE ARTICULO')
-@Controller('typearticle')
-export class TypesArticlesController {
-  constructor(private readonly typesArticlesService: TypesArticlesService) {}
+@ApiTags('USUARIOS')
+@Controller('user')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
 
   @Version('1')
   @Get('/')
@@ -17,12 +17,12 @@ export class TypesArticlesController {
   })
   @ApiBearerAuth()
   async findAll(
-      @TokenDecorator() tokenValid: ResponseDTO
+    @TokenDecorator() tokenValid: ResponseDTO
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.typesArticlesService.findAll();
+      response = await this.usersService.findAll();
     }
 
     return response;
@@ -35,20 +35,20 @@ export class TypesArticlesController {
   })
   @ApiBearerAuth()
   async save(
-      @TokenDecorator() tokenValid: ResponseDTO,
-      @Body() value: CreateTypeArticleDto
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Body() value: CreateUserDto
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.typesArticlesService.save(value);
+      response = await this.usersService.save(value);
     }
 
     return response;
   }
 
   @Version('1')
-  @Put('/:id')
+  @Patch('/:id')
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
   })
@@ -56,12 +56,12 @@ export class TypesArticlesController {
   async update(
     @TokenDecorator() tokenValid: ResponseDTO,
     @Param('id') id: number,
-    @Body() value: UpdateTypeArticleDto
+    @Body() value: UpdateUserDto
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.typesArticlesService.update(id, value);
+      response = await this.usersService.update(id, value);
     }
 
     return response;
@@ -80,7 +80,7 @@ export class TypesArticlesController {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.typesArticlesService.delete(id);
+      response = await this.usersService.delete(id);
     }
 
     return response;

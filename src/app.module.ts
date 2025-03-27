@@ -9,7 +9,18 @@ import { databaseProviders } from './providers/database.providers';
 import { sizesProviders } from './providers/sizes.providers';
 import { typesArticlesProviders } from './providers/types-articles.providers';
 import { TypesArticlesService } from './modules/types-articles/types-articles.service';
-import { TypesArticlesSController } from './modules/types-articles/types-articles.controller';
+import { TypesArticlesController } from './modules/types-articles/types-articles.controller';
+import { UsersController } from './modules/users/users.controller';
+import { UsersService } from './modules/users/users.service';
+import { usersProviders } from './providers/users.providers';
+import { SecurityController } from './modules/security/security.controller';
+import { SecurityService } from './modules/security/security.service';
+import { ArticlesController } from './modules/articles/articles.controller';
+import { ArticlesService } from './modules/articles/articles.service';
+import { articlesProviders } from './providers/articles.providers';
+import { articlesSizeProviders } from './providers/articles-sizes.providers';
+import { ArticlesSizesController } from './modules/articles-sizes/articles-sizes.controller';
+import { ArticlesSizesService } from './modules/articles-sizes/articles-sizes.service';
 
 @Module({
   imports: [
@@ -21,19 +32,34 @@ import { TypesArticlesSController } from './modules/types-articles/types-article
   ],
   controllers: [
     AppController,
+    SecurityController,
+    UsersController,
+    ArticlesController,
+    ArticlesSizesController,
     SizesController,
-    TypesArticlesSController,
+    TypesArticlesController,
   ],
   providers: [
     AppService,
+    SecurityService,
+    UsersService,
+    ArticlesService,
+    ArticlesSizesService,
     SizesService,
     TypesArticlesService,
     ...databaseProviders,
+    ...usersProviders,
+    ...articlesProviders,
+    ...articlesSizeProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
   exports: [
     ...databaseProviders,
+    ...usersProviders,
+    ...articlesProviders,
+    ...articlesSizeProviders,
+    ...sizesProviders,
     ...typesArticlesProviders,
   ],
 })

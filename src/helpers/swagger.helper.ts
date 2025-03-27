@@ -8,7 +8,7 @@ export const configSwagger = (app: INestApplication, packageJson: any) => {
     .setVersion(packageJson.version)
     .setDescription(packageJson.description)
     .setContact(packageJson.contact.name, '', packageJson.contact.email)
-    // .addBearerAuth()
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { TypeArticleSizeDto } from 'src/dto/type-article.dto';
 import { TypesArticles } from 'src/entitys/types-articles.entity';
+import { CreateTypeArticleDto, UpdateTypeArticleDto } from 'src/dto/type-article.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class TypesArticlesService {
     return response;
   }
 
-  async save( size: TypeArticleSizeDto ): Promise<ResponseDTO> {
+  async save( value: CreateTypeArticleDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -52,7 +52,7 @@ export class TypesArticlesService {
     try {
       response.error = false;
       response.message = 'Se registro en la base de datos.';
-      response.response = await this.typesArticlesRepository.save(size);
+      response.response = await this.typesArticlesRepository.save(value);
       response.status = 200;
 
     } catch (error) {
@@ -66,7 +66,7 @@ export class TypesArticlesService {
     return response;
   }
 
-  async update( id: number, size: TypeArticleSizeDto ): Promise<ResponseDTO> {
+  async update( id: number, value: UpdateTypeArticleDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -79,7 +79,7 @@ export class TypesArticlesService {
     try {
       response.error = false;
       response.message = 'Se actualizo la base de datos.';
-      response.response = await this.typesArticlesRepository.update(id, size);
+      response.response = await this.typesArticlesRepository.update(id, value);
       response.status = 200;
 
     } catch (error) {

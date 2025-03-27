@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateArticleSizeDto, UpdateArticleSizeDto } from 'src/dto/article-size.dto';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { CreateSizeDto, UpdateSizeDto } from 'src/dto/size.dto';
-import { Sizes } from 'src/entitys/sizes.entity';
+import { ArticlesSizes } from 'src/entitys/articles-sizes.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class SizesService {
+export class ArticlesSizesService {
 
   constructor(
-    @Inject('SIZES_REPOSITORY')
-    private sizesRepository: Repository<Sizes>,
+    @Inject('ARTICLES_SIZES_REPOSITORY')
+    private articlesSizesRepository: Repository<ArticlesSizes>,
   ) {}
 
   async findAll(): Promise<ResponseDTO> {
@@ -25,7 +25,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'La consulta a la base de datos se realizó correctamente.';
-      response.response = await this.sizesRepository.find();
+      response.response = await this.articlesSizesRepository.find();
       response.status = 200;
 
     } catch (error) {
@@ -39,7 +39,38 @@ export class SizesService {
     return response;
   }
 
-  async save( size: CreateSizeDto ): Promise<ResponseDTO> {
+  async findArticleId( articleId: number ): Promise<ResponseDTO> {
+    // Inicio
+    let response: ResponseDTO = {
+      error: true,
+      message: 'Error en el sericio',
+      response: [],
+      status: 422
+    }
+
+    // Proceso
+    try {
+      response.error = false;
+      response.message = 'La consulta a la base de datos se realizó correctamente.';
+      response.response = await this.articlesSizesRepository.find({
+        where: {
+          articleId,
+        }
+      });
+      response.status = 200;
+
+    } catch (error) {
+      response.error = true;
+      response.message = 'Error en la consulta.';
+      response.response = error;
+      response.status = 502;
+    }
+
+    //Fin
+    return response;
+  }
+
+  async save( value: CreateArticleSizeDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -52,7 +83,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se registro en la base de datos.';
-      response.response = await this.sizesRepository.save(size);
+      response.response = await this.articlesSizesRepository.save(value);
       response.status = 200;
 
     } catch (error) {
@@ -66,7 +97,7 @@ export class SizesService {
     return response;
   }
 
-  async update( id: number, size: UpdateSizeDto ): Promise<ResponseDTO> {
+  async update( id: number, value: UpdateArticleSizeDto ): Promise<ResponseDTO> {
     // Inicio
     let response: ResponseDTO = {
       error: true,
@@ -79,7 +110,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se actualizo la base de datos.';
-      response.response = await this.sizesRepository.update(id, size);
+      response.response = await this.articlesSizesRepository.update(id, value);
       response.status = 200;
 
     } catch (error) {
@@ -106,7 +137,7 @@ export class SizesService {
     try {
       response.error = false;
       response.message = 'Se elimino de la base de datos.';
-      response.response = await this.sizesRepository.delete(id);
+      response.response = await this.articlesSizesRepository.delete(id);
       response.status = 200;
 
     } catch (error) {

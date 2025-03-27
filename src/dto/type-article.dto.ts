@@ -7,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class TypeArticleSizeDto {
+export class CreateTypeArticleDto {
   @Expose()
   @IsString({ message: 'El campo "Tipo de Artículo" debe ser un texto válido.' })
   @MaxLength(100, { message: 'El campo "Tipo de Artículo" no puede tener más de 100 caracteres.' })
@@ -20,3 +20,5 @@ export class TypeArticleSizeDto {
   })
   name: string;
 }
+
+export class UpdateTypeArticleDto extends CreateTypeArticleDto {}

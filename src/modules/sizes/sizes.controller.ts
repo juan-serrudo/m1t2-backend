@@ -1,43 +1,88 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { SizesService } from './sizes.service';
-import { CreateSizeDto } from 'src/dto/size.dto';
+import { CreateSizeDto, UpdateSizeDto } from 'src/dto/size.dto';
+import { TokenDecorator } from 'src/decorators/jwt.decorator';
 
 @ApiTags('TAMAÑOS')
 @Controller('size')
 export class SizesController {
   constructor(private readonly sizesService: SizesService) {}
 
+  @Version('1')
   @Get('/')
   @ApiOperation({
     summary: 'Obtiene todos los valores de la tabla.',
   })
-  async findAll(): Promise<ResponseDTO> {
-    return this.sizesService.findAll();
+  @ApiBearerAuth()
+  async findAll(
+      @TokenDecorator() tokenValid: ResponseDTO,
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.sizesService.findAll();
+    }
+
+    return response;
   }
 
+  @Version('1')
   @Post('/')
   @ApiOperation({
     summary: 'Registrar en la base de datos.',
   })
-  async save(@Body() size: CreateSizeDto): Promise<ResponseDTO> {
-    return this.sizesService.save(size);
+  @ApiBearerAuth()
+  async save(
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Body() value: CreateSizeDto
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.sizesService.save(value);
+    }
+
+    return response;
   }
 
+  @Version('1')
   @Put('/:id')
   @ApiOperation({
     summary: 'Actualizar la base de datos.',
   })
-  async update(@Param('id') id: number, @Body() size: CreateSizeDto): Promise<ResponseDTO> {
-    return this.sizesService.update(id, size);
+  @ApiBearerAuth()
+  async update(
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Param('id') id: number,
+    @Body() value: UpdateSizeDto
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.sizesService.update(id, value);
+    }
+
+    return response;
   }
 
+  @Version('1')
   @Delete('/:id')
   @ApiOperation({
     summary: 'Eliminar de la base de datos.',
   })
-  async delete(@Param('id') id: number): Promise<ResponseDTO> {
-    return this.sizesService.delete(id);
+  @ApiBearerAuth()
+  async delete(
+    @TokenDecorator() tokenValid: ResponseDTO,
+    @Param('id') id: number
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.sizesService.delete(id);
+    }
+
+    return response;
   }
 }
