@@ -24,8 +24,8 @@ async function bootstrap() {
   const packageJson = envService.get('packageJson');
   app.enableCors({
     origin: getCors({
-      env_mode: envService.get('ENV_ENTORNO') || '',
-      env_cors: envService.get('ENV_CORS') || '',
+      env_mode: envService.get('ENV_ENTORNO') || 'DEV',
+      env_cors: envService.get('ENV_CORS') || '*',
     }),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
