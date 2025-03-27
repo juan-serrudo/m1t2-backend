@@ -8,7 +8,6 @@ import { bold } from 'chalk';
 import { json, urlencoded } from 'express';
 import * as compression from 'compression';
 
-import { getCors } from './helpers/cors.helper';
 import { ResponseFormatInterceptor } from './interceptors/response-format.interceptor';
 import { configSwagger } from './helpers/swagger.helper';
 
@@ -23,11 +22,9 @@ async function bootstrap() {
   const envService = app.get(ConfigService);
   const packageJson = envService.get('packageJson');
   app.enableCors({
-    origin: getCors({
-      env_mode: envService.get('ENV_ENTORNO') || '',
-      env_cors: envService.get('ENV_CORS') || '',
-    }),
+    origin: (process.env.ENV_ENTORNO == "production") ? process.env.ENV_CORS?.split(",") : "*",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
 
