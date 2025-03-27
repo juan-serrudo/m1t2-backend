@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Version } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { ArticlesService } from './articles.service';
+import {  ArticlesSizesService } from './articles-sizes.service';
 import { TokenDecorator } from 'src/decorators/jwt.decorator';
-import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
+import { CreateArticleSizeDto, UpdateArticleSizeDto } from 'src/dto/article-size.dto';
 
-@ApiTags('ARTÍCULOS')
-@Controller('article')
-export class ArticlesController {
-  constructor(private readonly articlesService: ArticlesService) {}
+@ApiTags('ARTÍCULOS Y SUS TAMAÑOS')
+@Controller('article/size')
+export class ArticlesSizesController {
+  constructor(private readonly articlesSizesService: ArticlesSizesService) {}
 
   @Version('1')
   @Get('/')
@@ -17,12 +17,31 @@ export class ArticlesController {
   })
   @ApiBearerAuth()
   async findAll(
-      @TokenDecorator() tokenValid: ResponseDTO,
+    @TokenDecorator() tokenValid: ResponseDTO,
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.articlesService.findAll();
+      response = await this.articlesSizesService.findAll();
+    }
+
+    return response;
+  }
+
+  @Version('1')
+  @Get('/:articleId')
+  @ApiOperation({
+    summary: 'Obtiene todos los valores de un artículo.',
+  })
+  @ApiBearerAuth()
+  async findArticleId(
+    @Param('articleId') articleId: number,
+    @TokenDecorator() tokenValid: ResponseDTO,
+  ): Promise<ResponseDTO> {
+    let response = tokenValid;
+
+    if ( ! response.error) {
+      response = await this.articlesSizesService.findArticleId(articleId);
     }
 
     return response;
@@ -36,12 +55,12 @@ export class ArticlesController {
   @ApiBearerAuth()
   async save(
     @TokenDecorator() tokenValid: ResponseDTO,
-    @Body() value: CreateArticleDto
+    @Body() value: CreateArticleSizeDto
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.articlesService.save(value);
+      response = await this.articlesSizesService.save(value);
     }
 
     return response;
@@ -56,12 +75,12 @@ export class ArticlesController {
   async update(
     @TokenDecorator() tokenValid: ResponseDTO,
     @Param('id') id: number,
-    @Body() value: UpdateArticleDto
+    @Body() value: UpdateArticleSizeDto
   ): Promise<ResponseDTO> {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.articlesService.update(id, value);
+      response = await this.articlesSizesService.update(id, value);
     }
 
     return response;
@@ -80,7 +99,7 @@ export class ArticlesController {
     let response = tokenValid;
 
     if ( ! response.error) {
-      response = await this.articlesService.delete(id);
+      response = await this.articlesSizesService.delete(id);
     }
 
     return response;

@@ -18,6 +18,9 @@ import { SecurityService } from './modules/security/security.service';
 import { ArticlesController } from './modules/articles/articles.controller';
 import { ArticlesService } from './modules/articles/articles.service';
 import { articlesProviders } from './providers/articles.providers';
+import { articlesSizeProviders } from './providers/articles-sizes.providers';
+import { ArticlesSizesController } from './modules/articles-sizes/articles-sizes.controller';
+import { ArticlesSizesService } from './modules/articles-sizes/articles-sizes.service';
 
 @Module({
   imports: [
@@ -32,6 +35,7 @@ import { articlesProviders } from './providers/articles.providers';
     SecurityController,
     UsersController,
     ArticlesController,
+    ArticlesSizesController,
     SizesController,
     TypesArticlesController,
   ],
@@ -40,11 +44,13 @@ import { articlesProviders } from './providers/articles.providers';
     SecurityService,
     UsersService,
     ArticlesService,
+    ArticlesSizesService,
     SizesService,
     TypesArticlesService,
     ...databaseProviders,
     ...usersProviders,
     ...articlesProviders,
+    ...articlesSizeProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
@@ -52,6 +58,7 @@ import { articlesProviders } from './providers/articles.providers';
     ...databaseProviders,
     ...usersProviders,
     ...articlesProviders,
+    ...articlesSizeProviders,
     ...sizesProviders,
     ...typesArticlesProviders,
   ],
